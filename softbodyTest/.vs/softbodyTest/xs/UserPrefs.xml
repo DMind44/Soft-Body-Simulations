@@ -1,0 +1,24 @@
+﻿<Properties StartupConfiguration="{881B9852-03F5-BC7F-67DB-DC65C354CE46}|">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/SpawnerController.cs">
+    <Files>
+      <File FileName="Assets/SpawnerController.cs" Line="303" Column="6" />
+      <File FileName="Assets/SoftbodyController.cs" />
+    </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State name="__root__">
+          <Node name="softbodyTest" expanded="True">
+            <Node name="Assets" expanded="True" selected="True" />
+          </Node>
+        </State>
+      </Pad>
+    </Pads>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="531af4e4-86ce-421b-8303-54a6a420e3c1" />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MultiItemStartupConfigurations />
+</Properties>

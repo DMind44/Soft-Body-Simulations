@@ -1,0 +1,13 @@
+fileFormatVersion: 2
+guid: 34bfe3f69daca4c97a9fad9f50f83463
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - softbodyBasePrefab: {fileID: 2734007273120662006, guid: 13ea6984c116f4d53afbe7674ef2d3ab, type: 3}
+  - softbodyVertexPrefab: {fileID: 4888970388142884840, guid: 77f56201b9b174df19a2ce77c7f57102, type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
