@@ -6,7 +6,7 @@ using UnityEngine.InputSystem;
 public class SoftbodyController : MonoBehaviour
 {
     InputAction impulse;
-    float value = 5;
+    float value = 1;
 
     //TODO: Add position synchronization
 

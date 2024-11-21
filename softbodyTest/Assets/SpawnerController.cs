@@ -176,7 +176,8 @@ public class SpawnerController : MonoBehaviour
                         //NOTE:
                         /*
                          * We need to glue to the following vertices:
-                         * 
+                         * Same as above + before (different tl arraylist, same sub arraylist and index)
+                         * Up diagonals ONLY
                          */
 
                         //Now glue the first rope together using spring joints
@@ -192,24 +193,65 @@ public class SpawnerController : MonoBehaviour
                                 for (int k = 0; k < rope.Count; k++)
                                 {
                                     //ONLY FULLY SKIP THE VERY FIRST ONE - SELECTIVELY SKIP THE OTHERS
-                                    GameObject vertex = (GameObject)((ArrayList)vertices[i])[j];
+                                    GameObject vertex = (GameObject)rope[k];
                                     //TEST: Will reducing the mass create a better effect?
                                     vertex.GetComponent<Rigidbody>().mass = pointMass;
 
                                     //Glue to previous vertex
-                                    if (j > 0)
+                                    if (k > 0)
                                     {
-                                        GameObject previousVertex = (GameObject)((ArrayList)vertices[i])[j - 1];
+                                        GameObject previousVertex = (GameObject)rope[k - 1];
 
                                         GlueVertices(vertex, previousVertex);
                                     }
 
                                     //Glue to vertex above
-                                    if (i > 0)
+                                    if (j > 0)
                                     {
-                                        GameObject aboveVertex = (GameObject)((ArrayList)vertices[i - 1])[j];
+                                        GameObject aboveVertex = (GameObject)((ArrayList)plane[j - 1])[k];
 
                                         GlueVertices(vertex, aboveVertex);
+                                    }
+
+                                    //Glue to vertex before
+                                    if (i > 0)
+                                    {
+                                        GameObject beforeVertex = (GameObject)((ArrayList)((ArrayList)vertices[i - 1])[j])[k];
+
+                                        GlueVertices(vertex, beforeVertex);
+                                    }
+
+                                    //ONLY GLUE VERTICES UP
+                                    if (i > 0)
+                                    {
+                                        //Glue to vertex left-forwards
+                                        if (k > 0 && j > 0)
+                                        {
+                                            GameObject lfVertex = (GameObject)((ArrayList)((ArrayList)vertices[i - 1])[j - 1])[k - 1];
+
+                                            GlueVertices(vertex, lfVertex);
+                                        }
+                                        //Glue to vertex left-backwards
+                                        if (k < rope.Count - 1 && j > 0)
+                                        {
+                                            GameObject lbVertex = (GameObject)((ArrayList)((ArrayList)vertices[i - 1])[j - 1])[k + 1];
+
+                                            GlueVertices(vertex, lbVertex);
+                                        }
+                                        //Glue to vertex right-forwards
+                                        if (k > 0 && j < plane.Count - 1)
+                                        {
+                                            GameObject rfVertex = (GameObject)((ArrayList)((ArrayList)vertices[i - 1])[j + 1])[k - 1];
+
+                                            GlueVertices(vertex, rfVertex);
+                                        }
+                                        //Glue to vertex right-backwards
+                                        if (k < plane.Count - 1 && j > rope.Count - 1)
+                                        {
+                                            GameObject rbVertex = (GameObject)((ArrayList)((ArrayList)vertices[i - 1])[j + 1])[k + 1];
+
+                                            GlueVertices(vertex, rbVertex);
+                                        }
                                     }
                                 }
                             }
@@ -235,9 +277,9 @@ public class SpawnerController : MonoBehaviour
         yield return new WaitForSeconds(1);
         //GameObject rope0 = SpawnSoftbody(SoftbodyType.ROPE, dimensions, 3);
 
-        GameObject sheet0 = SpawnSoftbody(SoftbodyType.SHEET, dimensions, 3);
+        //GameObject sheet0 = SpawnSoftbody(SoftbodyType.SHEET, dimensions, 3);
 
-        //GameObject cube0 = SpawnSoftbody(SoftbodyType.CUBE, dimensions, 3);
+        GameObject cube0 = SpawnSoftbody(SoftbodyType.CUBE, dimensions, 3);
         //sheet0.GetComponent<SoftbodyController>().ImpulseSoftbody(20);
     }
 
@@ -273,11 +315,11 @@ public class SpawnerController : MonoBehaviour
         ArrayList vertices = new ArrayList();
         ArrayList subVertices;
         //Generate the near array
-        subVertices = GenerateRope(softbodyBase, resolution, dimensions, Vector3.zero);
+        subVertices = GenerateRope(softbodyBase, resolution, dimensions, Vector3.zero + offset);
         vertices.Add(subVertices);
 
         //Generate the far array
-        subVertices = GenerateRope(softbodyBase, resolution, dimensions, new Vector3(0, 0, dimensions[1]));
+        subVertices = GenerateRope(softbodyBase, resolution, dimensions, new Vector3(0, 0, dimensions[1]) + offset);
         vertices.Add(subVertices);
 
         for (int i = 0; i < resolution; i++)
@@ -287,10 +329,10 @@ public class SpawnerController : MonoBehaviour
                 ArrayList leftSubVertex = (ArrayList)vertices[j];
                 ArrayList rightSubVertex = (ArrayList)vertices[j + 1];
 
-                float zOffset = (((GameObject)leftSubVertex[0]).transform.position.z + ((GameObject)rightSubVertex[0]).transform.position.z) / 2;
+                float zOffset = (((GameObject)leftSubVertex[0]).transform.localPosition.z + ((GameObject)rightSubVertex[0]).transform.localPosition.z) / 2;
 
                 //Generate the middle array
-                ArrayList midVertices = GenerateRope(softbodyBase, resolution, dimensions, new Vector3(0, 0, zOffset));
+                ArrayList midVertices = GenerateRope(softbodyBase, resolution, dimensions, new Vector3(0, 0, zOffset) + offset);
                 vertices.Insert(j + 1, midVertices);
             }
         }
@@ -309,7 +351,7 @@ public class SpawnerController : MonoBehaviour
         vertices.Add(subVertices);
 
         //Generate the far plane
-        subVertices = GeneratePlane(softbodyBase, resolution, dimensions, new Vector3(0, dimensions[1], 0));
+        subVertices = GeneratePlane(softbodyBase, resolution, dimensions, new Vector3(0, dimensions[2], 0));
         vertices.Add(subVertices);
 
         for (int i = 0; i < resolution; i++)
@@ -319,10 +361,10 @@ public class SpawnerController : MonoBehaviour
                 ArrayList leftSubVertex = (ArrayList)((ArrayList)vertices[j])[0];
                 ArrayList rightSubVertex = (ArrayList)((ArrayList)vertices[j + 1])[0];
 
-                float yOffset = (((GameObject)leftSubVertex[0]).transform.position.z + ((GameObject)rightSubVertex[0]).transform.position.z) / 2;
+                float yOffset = (((GameObject)leftSubVertex[0]).transform.localPosition.y + ((GameObject)rightSubVertex[0]).transform.localPosition.y) / 2;
 
                 //Generate the middle plane
-                ArrayList midVertices = GenerateRope(softbodyBase, resolution, dimensions, new Vector3(0, yOffset, 0));
+                ArrayList midVertices = GeneratePlane(softbodyBase, resolution, dimensions, new Vector3(0, yOffset, 0));
                 vertices.Insert(j + 1, midVertices);
             }
         }
@@ -349,5 +391,8 @@ public class SpawnerController : MonoBehaviour
 
         //TEST: Will reducing the mass create a better effect?
         targetSpring.GetComponent<Rigidbody>().mass = pointMass;
+
+        //TODO: Test with debug lines
+        Debug.DrawLine(vertex.transform.position, target.transform.position, Color.red, 10);
     }
 }
