@@ -41,6 +41,7 @@ public class SpawnerController : MonoBehaviour
     {
         //Create softbody base
         GameObject softbodyBase = Instantiate(softbodyBasePrefab, transform.position, transform.rotation);
+        SoftbodyController softbodyController = softbodyBase.GetComponent<SoftbodyController>();
 
         //Setup the arrays for holding verts
         //Find dimensions based on resolution
@@ -63,6 +64,10 @@ public class SpawnerController : MonoBehaviour
                     {
                         GameObject vertex = (GameObject)vertices[i];
                         GameObject previousVertex = (GameObject)vertices[i - 1];
+
+                        //All vertices for ropes are "outer"
+                        softbodyController.outerVertices.Add(vertex);
+                        //Triangles for ropes are weird and need tuning
 
                         //NOTE: Should be safe - but we should be careful as this will lead to multiple spring joings per vertex
                         //Must be careful when using GetComponent on SpringJoints
@@ -106,6 +111,8 @@ public class SpawnerController : MonoBehaviour
                             {
                                 //ONLY FULLY SKIP THE VERY FIRST ONE - SELECTIVELY SKIP THE OTHERS
                                 GameObject vertex = (GameObject)((ArrayList)vertices[i])[j];
+                                //All vertices for sheets are "outer"
+                                softbodyController.outerVertices.Add(vertex);
                                 //TEST: Will reducing the mass create a better effect?
                                 vertex.GetComponent<Rigidbody>().mass = pointMass;
 
@@ -197,6 +204,22 @@ public class SpawnerController : MonoBehaviour
                                     //TEST: Will reducing the mass create a better effect?
                                     vertex.GetComponent<Rigidbody>().mass = pointMass;
 
+                                    //We have to check if outer vertex here
+                                    //Generate the boolean list for directions - [i = 0; j = 0; k = 0; i = max, j = max, k = max]
+                                    List<bool> directionList = new List<bool>() { i == 0, j == 0, k == 0, i == vertices.Count - 1, j == plane.Count - 1, k == rope.Count - 1 };
+                                    //If it's the first vertex on any axis, it's an outer
+                                    //We also shouldn't have dupes, but better to check
+                                    if ((i == 0 || j == 0 || k == 0) && !softbodyBase.GetComponent<SoftbodyController>().outerVertices.Contains(vertex))
+                                    {
+                                        softbodyController.outerVertexData.Add(new VertexData(vertex, directionList));
+                                    }
+                                    //If it's the last vertex on any axis, it's an outer
+                                    //We also shouldn't have dupes, but better to check
+                                    else if ((i == vertices.Count - 1 || j == plane.Count - 1 || k == rope.Count - 1) && !softbodyBase.GetComponent<SoftbodyController>().outerVertices.Contains(vertex))
+                                    {
+                                        softbodyController.outerVertexData.Add(new VertexData(vertex,directionList));
+                                    }
+
                                     //Glue to previous vertex
                                     if (k > 0)
                                     {
@@ -268,6 +291,8 @@ public class SpawnerController : MonoBehaviour
                 break;
         }
 
+        softbodyController.ResetMesh();
+
         return softbodyBase;
     }
 
@@ -295,6 +320,7 @@ public class SpawnerController : MonoBehaviour
         vertices.Add(endVertex);
         startVertex.transform.localScale = new Vector3(dimensions[0] / Mathf.Pow(2, resolution), dimensions[2] / Mathf.Pow(2, resolution), dimensions[1] / Mathf.Pow(2, resolution));
         endVertex.transform.localScale = new Vector3(dimensions[0] / Mathf.Pow(2, resolution), dimensions[2] / Mathf.Pow(2, resolution), dimensions[1] / Mathf.Pow(2, resolution));
+
         //Iterate over resolution to split into resolution
         for (int i = 0; i < resolution; i++)
         {
