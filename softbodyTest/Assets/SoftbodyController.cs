@@ -129,15 +129,12 @@ public class SoftbodyController : MonoBehaviour
                 for (int j = 0; j < faceVerts.Count; j++)
                 {
                     Vector3 faceVert = faceVerts[j];
-                    if (!vertexList.Contains(faceVert))
-                    {
-                        vertices.Add(faceVert);
-                        //NOTE: We dummy out normals here, then recalculate once complete
-                        normals.Add(Vector3.zero);
-                        //NOTE: Until we add textures, uvs are also dummied out
-                        uv.Add(Vector2.zero);
-                        vertexList.Add(faceVert);
-                    }
+                    vertices.Add(faceVert);
+                    //NOTE: We dummy out normals here, then recalculate once complete
+                    normals.Add(Vector3.zero);
+                    //NOTE: Until we add textures, uvs are also dummied out
+                    uv.Add(Vector2.zero);
+                    vertexList.Add(faceVert);
 
                     int vertIndex = vertexList.Count - 1;
 
@@ -148,7 +145,6 @@ public class SoftbodyController : MonoBehaviour
                         //Setup for merge
                         KeyValuePair<Vector3, int> closeVertexData = CloseToPoint(vertexList, faceVert, vertIndex);
                         Vector3 closeVertex = closeVertexData.Key;
-                        int index = vertexList.IndexOf(faceVert);
                         if (closeVertex != Vector3.negativeInfinity)
                         {
                             int closeIndex = closeVertexData.Value;
@@ -156,16 +152,16 @@ public class SoftbodyController : MonoBehaviour
                             List<int> mergeList = FindInSublist(mergedVertexGroups, closeIndex);
                             if (mergeList != new List<int>())
                             {
-                                mergeList.Add(index);
+                                mergeList.Add(vertIndex);
                             }
                             else
                             {
-                                mergedVertexGroups.Add(new List<int>() { closeIndex, index });
+                                mergedVertexGroups.Add(new List<int>() { closeIndex, vertIndex });
                             }
                         }
                         else
                         {
-                            mergedVertexGroups.Add(new List<int>() { index });
+                            mergedVertexGroups.Add(new List<int>() { vertIndex });
                         }
                     }
                 }
@@ -188,15 +184,12 @@ public class SoftbodyController : MonoBehaviour
                 for (int j = 0; j < faceVerts.Count; j++)
                 {
                     Vector3 faceVert = faceVerts[j];
-                    if (!vertexList.Contains(faceVert))
-                    {
-                        vertices.Add(faceVert);
-                        //NOTE: We dummy out normals here, then recalculate once complete
-                        normals.Add(Vector3.zero);
-                        //NOTE: Until we add textures, uvs are also dummied out
-                        uv.Add(Vector2.zero);
-                        vertexList.Add(faceVert);
-                    }
+                    vertices.Add(faceVert);
+                    //NOTE: We dummy out normals here, then recalculate once complete
+                    normals.Add(Vector3.zero);
+                    //NOTE: Until we add textures, uvs are also dummied out
+                    uv.Add(Vector2.zero);
+                    vertexList.Add(faceVert);
 
                     int vertIndex = vertexList.Count - 1;
 
@@ -207,7 +200,6 @@ public class SoftbodyController : MonoBehaviour
                         //Setup for merge
                         KeyValuePair<Vector3, int> closeVertexData = CloseToPoint(vertexList, faceVert, vertIndex);
                         Vector3 closeVertex = closeVertexData.Key;
-                        int index = vertexList.IndexOf(faceVert);
                         if (closeVertex != Vector3.negativeInfinity)
                         {
                             int closeIndex = closeVertexData.Value;
@@ -215,16 +207,16 @@ public class SoftbodyController : MonoBehaviour
                             List<int> mergeList = FindInSublist(mergedVertexGroups, closeIndex);
                             if (mergeList != new List<int>())
                             {
-                                mergeList.Add(index);
+                                mergeList.Add(vertIndex);
                             }
                             else
                             {
-                                mergedVertexGroups.Add(new List<int>() { closeIndex, index });
+                                mergedVertexGroups.Add(new List<int>() { closeIndex, vertIndex });
                             }
                         }
                         else
                         {
-                            mergedVertexGroups.Add(new List<int>() { index });
+                            mergedVertexGroups.Add(new List<int>() { vertIndex });
                         }
                     }
                 }
@@ -247,15 +239,12 @@ public class SoftbodyController : MonoBehaviour
                 for (int j = 0; j < faceVerts.Count; j++)
                 {
                     Vector3 faceVert = faceVerts[j];
-                    if (!vertexList.Contains(faceVert))
-                    {
-                        vertices.Add(faceVert);
-                        //NOTE: We dummy out normals here, then recalculate once complete
-                        normals.Add(Vector3.zero);
-                        //NOTE: Until we add textures, uvs are also dummied out
-                        uv.Add(Vector2.zero);
-                        vertexList.Add(faceVert);
-                    }
+                    vertices.Add(faceVert);
+                    //NOTE: We dummy out normals here, then recalculate once complete
+                    normals.Add(Vector3.zero);
+                    //NOTE: Until we add textures, uvs are also dummied out
+                    uv.Add(Vector2.zero);
+                    vertexList.Add(faceVert);
 
                     int vertIndex = vertexList.Count - 1;
 
@@ -266,7 +255,6 @@ public class SoftbodyController : MonoBehaviour
                         //Setup for merge
                         KeyValuePair<Vector3, int> closeVertexData = CloseToPoint(vertexList, faceVert, vertIndex);
                         Vector3 closeVertex = closeVertexData.Key;
-                        int index = vertexList.IndexOf(faceVert);
                         if (closeVertex != Vector3.negativeInfinity)
                         {
                             int closeIndex = closeVertexData.Value;
@@ -274,16 +262,16 @@ public class SoftbodyController : MonoBehaviour
                             List<int> mergeList = FindInSublist(mergedVertexGroups, closeIndex);
                             if (mergeList != new List<int>())
                             {
-                                mergeList.Add(index);
+                                mergeList.Add(vertIndex);
                             }
                             else
                             {
-                                mergedVertexGroups.Add(new List<int>() { closeIndex, index });
+                                mergedVertexGroups.Add(new List<int>() { closeIndex, vertIndex });
                             }
                         }
                         else
                         {
-                            mergedVertexGroups.Add(new List<int>() { index });
+                            mergedVertexGroups.Add(new List<int>() { vertIndex });
                         }
                     }
                 }
@@ -306,15 +294,12 @@ public class SoftbodyController : MonoBehaviour
                 for (int j = 0; j < faceVerts.Count; j++)
                 {
                     Vector3 faceVert = faceVerts[j];
-                    if (!vertexList.Contains(faceVert))
-                    {
-                        vertices.Add(faceVert);
-                        //NOTE: We dummy out normals here, then recalculate once complete
-                        normals.Add(Vector3.zero);
-                        //NOTE: Until we add textures, uvs are also dummied out
-                        uv.Add(Vector2.zero);
-                        vertexList.Add(faceVert);
-                    }
+                    vertices.Add(faceVert);
+                    //NOTE: We dummy out normals here, then recalculate once complete
+                    normals.Add(Vector3.zero);
+                    //NOTE: Until we add textures, uvs are also dummied out
+                    uv.Add(Vector2.zero);
+                    vertexList.Add(faceVert);
 
                     int vertIndex = vertexList.Count - 1;
 
@@ -325,7 +310,6 @@ public class SoftbodyController : MonoBehaviour
                         //Setup for merge
                         KeyValuePair<Vector3, int> closeVertexData = CloseToPoint(vertexList, faceVert, vertIndex);
                         Vector3 closeVertex = closeVertexData.Key;
-                        int index = vertexList.IndexOf(faceVert);
                         if (closeVertex != Vector3.negativeInfinity)
                         {
                             int closeIndex = closeVertexData.Value;
@@ -333,16 +317,16 @@ public class SoftbodyController : MonoBehaviour
                             List<int> mergeList = FindInSublist(mergedVertexGroups, closeIndex);
                             if (mergeList != new List<int>())
                             {
-                                mergeList.Add(index);
+                                mergeList.Add(vertIndex);
                             }
                             else
                             {
-                                mergedVertexGroups.Add(new List<int>() { closeIndex, index });
+                                mergedVertexGroups.Add(new List<int>() { closeIndex, vertIndex });
                             }
                         }
                         else
                         {
-                            mergedVertexGroups.Add(new List<int>() { index });
+                            mergedVertexGroups.Add(new List<int>() { vertIndex });
                         }
                     }
                 }
@@ -365,15 +349,12 @@ public class SoftbodyController : MonoBehaviour
                 for (int j = 0; j < faceVerts.Count; j++)
                 {
                     Vector3 faceVert = faceVerts[j];
-                    if (!vertexList.Contains(faceVert))
-                    {
-                        vertices.Add(faceVert);
-                        //NOTE: We dummy out normals here, then recalculate once complete
-                        normals.Add(Vector3.zero);
-                        //NOTE: Until we add textures, uvs are also dummied out
-                        uv.Add(Vector2.zero);
-                        vertexList.Add(faceVert);
-                    }
+                    vertices.Add(faceVert);
+                    //NOTE: We dummy out normals here, then recalculate once complete
+                    normals.Add(Vector3.zero);
+                    //NOTE: Until we add textures, uvs are also dummied out
+                    uv.Add(Vector2.zero);
+                    vertexList.Add(faceVert);
 
                     int vertIndex = vertexList.Count - 1;
 
@@ -384,7 +365,6 @@ public class SoftbodyController : MonoBehaviour
                         //Setup for merge
                         KeyValuePair<Vector3, int> closeVertexData = CloseToPoint(vertexList, faceVert, vertIndex);
                         Vector3 closeVertex = closeVertexData.Key;
-                        int index = vertexList.IndexOf(faceVert);
                         if (closeVertex != Vector3.negativeInfinity)
                         {
                             int closeIndex = closeVertexData.Value;
@@ -392,16 +372,16 @@ public class SoftbodyController : MonoBehaviour
                             List<int> mergeList = FindInSublist(mergedVertexGroups, closeIndex);
                             if (mergeList != new List<int>())
                             {
-                                mergeList.Add(index);
+                                mergeList.Add(vertIndex);
                             }
                             else
                             {
-                                mergedVertexGroups.Add(new List<int>() { closeIndex, index });
+                                mergedVertexGroups.Add(new List<int>() { closeIndex, vertIndex });
                             }
                         }
                         else
                         {
-                            mergedVertexGroups.Add(new List<int>() { index });
+                            mergedVertexGroups.Add(new List<int>() { vertIndex });
                         }
                     }
                 }
@@ -424,15 +404,12 @@ public class SoftbodyController : MonoBehaviour
                 for (int j = 0; j < faceVerts.Count; j++)
                 {
                     Vector3 faceVert = faceVerts[j];
-                    if (!vertexList.Contains(faceVert))
-                    {
-                        vertices.Add(faceVert);
-                        //NOTE: We dummy out normals here, then recalculate once complete
-                        normals.Add(Vector3.zero);
-                        //NOTE: Until we add textures, uvs are also dummied out
-                        uv.Add(Vector2.zero);
-                        vertexList.Add(faceVert);
-                    }
+                    vertices.Add(faceVert);
+                    //NOTE: We dummy out normals here, then recalculate once complete
+                    normals.Add(Vector3.zero);
+                    //NOTE: Until we add textures, uvs are also dummied out
+                    uv.Add(Vector2.zero);
+                    vertexList.Add(faceVert);
 
                     int vertIndex = vertexList.Count - 1;
 
@@ -443,7 +420,6 @@ public class SoftbodyController : MonoBehaviour
                         //Setup for merge
                         KeyValuePair<Vector3, int> closeVertexData = CloseToPoint(vertexList, faceVert, vertIndex);
                         Vector3 closeVertex = closeVertexData.Key;
-                        int index = vertexList.IndexOf(faceVert);
                         if (closeVertex != Vector3.negativeInfinity)
                         {
                             int closeIndex = closeVertexData.Value;
@@ -451,16 +427,16 @@ public class SoftbodyController : MonoBehaviour
                             List<int> mergeList = FindInSublist(mergedVertexGroups, closeIndex);
                             if (mergeList != new List<int>())
                             {
-                                mergeList.Add(index);
+                                mergeList.Add(vertIndex);
                             }
                             else
                             {
-                                mergedVertexGroups.Add(new List<int>() { closeIndex, index });
+                                mergedVertexGroups.Add(new List<int>() { closeIndex, vertIndex });
                             }
                         }
                         else
                         {
-                            mergedVertexGroups.Add(new List<int>() { index });
+                            mergedVertexGroups.Add(new List<int>() { vertIndex });
                         }
                     }
                 }
@@ -471,7 +447,6 @@ public class SoftbodyController : MonoBehaviour
             }
         }
         //TODO: Figure out why merging is not working?!?!?!
-        /*
         if (initial)
         {
             //Post process for merged vertices
@@ -528,7 +503,7 @@ public class SoftbodyController : MonoBehaviour
                 vertices[index] = averageVertex;
             }
         }
-        */
+        
         mesh.vertices = vertices.ToArray();
         mesh.triangles = triangles.ToArray();
         mesh.normals = normals.ToArray();

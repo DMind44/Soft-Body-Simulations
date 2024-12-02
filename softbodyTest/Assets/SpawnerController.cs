@@ -305,6 +305,8 @@ public class SpawnerController : MonoBehaviour
         //GameObject sheet0 = SpawnSoftbody(SoftbodyType.SHEET, dimensions, 3);
 
         GameObject cube0 = SpawnSoftbody(SoftbodyType.CUBE, dimensions, 3);
+        yield return new WaitForSeconds(2);
+        GameObject cube1 = SpawnSoftbody(SoftbodyType.CUBE, dimensions, 3);
         //sheet0.GetComponent<SoftbodyController>().ImpulseSoftbody(20);
     }
 
