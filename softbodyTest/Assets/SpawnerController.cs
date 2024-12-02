@@ -293,6 +293,8 @@ public class SpawnerController : MonoBehaviour
         GameObject endVertex = Instantiate(softbodyVertexPrefab, softbodyBase.transform.position + new Vector3(dimensions[0], 0, 0) + offset, Quaternion.identity, softbodyBase.transform);
         vertices.Add(startVertex);
         vertices.Add(endVertex);
+        startVertex.transform.localScale = new Vector3(dimensions[0] / Mathf.Pow(2, resolution), dimensions[2] / Mathf.Pow(2, resolution), dimensions[1] / Mathf.Pow(2, resolution));
+        endVertex.transform.localScale = new Vector3(dimensions[0] / Mathf.Pow(2, resolution), dimensions[2] / Mathf.Pow(2, resolution), dimensions[1] / Mathf.Pow(2, resolution));
         //Iterate over resolution to split into resolution
         for (int i = 0; i < resolution; i++)
         {
@@ -301,6 +303,7 @@ public class SpawnerController : MonoBehaviour
                 GameObject leftVertex = (GameObject)vertices[j];
                 GameObject rightVertex = (GameObject)vertices[j + 1];
                 GameObject newVertex = Instantiate(softbodyVertexPrefab, (leftVertex.transform.position + rightVertex.transform.position) / 2, Quaternion.identity, softbodyBase.transform);
+                newVertex.transform.localScale = new Vector3(dimensions[0] / Mathf.Pow(2, resolution), dimensions[2] / Mathf.Pow(2, resolution), dimensions[1] / Mathf.Pow(2, resolution));
                 vertices.Insert(j + 1, newVertex);
             }
         }
@@ -391,8 +394,5 @@ public class SpawnerController : MonoBehaviour
 
         //TEST: Will reducing the mass create a better effect?
         targetSpring.GetComponent<Rigidbody>().mass = pointMass;
-
-        //TODO: Test with debug lines
-        Debug.DrawLine(vertex.transform.position, target.transform.position, Color.red, 10);
     }
 }

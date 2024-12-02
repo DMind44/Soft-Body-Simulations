@@ -1005,7 +1005,8 @@ Transform:
   m_LocalPosition: {x: 0, y: 1, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 2130488278}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &963194229
@@ -2686,12 +2687,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2130488277}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -3, y: 5, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 4}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 963194228}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2130488279
 MonoBehaviour:
@@ -2706,7 +2707,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   softbodyBasePrefab: {fileID: 2734007273120662006, guid: 13ea6984c116f4d53afbe7674ef2d3ab, type: 3}
-  softbodyVertexPrefab: {fileID: 4888970388142884840, guid: 77f56201b9b174df19a2ce77c7f57102, type: 3}
+  softbodyVertexPrefab: {fileID: 4888970388142884840, guid: f49190de62134436686a3f1242487e35, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
@@ -2716,6 +2717,5 @@ SceneRoots:
   - {fileID: 1002965890}
   - {fileID: 1448477444}
   - {fileID: 1763415648}
-  - {fileID: 2130488278}
   - {fileID: 2006730251}
   - {fileID: 1177365959}
