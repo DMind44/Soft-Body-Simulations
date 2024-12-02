@@ -291,7 +291,7 @@ public class SpawnerController : MonoBehaviour
                 break;
         }
 
-        softbodyController.ResetMesh();
+        softbodyController.ConstructMesh();
 
         return softbodyBase;
     }
