@@ -436,10 +436,6 @@ public class SpawnerController : MonoBehaviour
         vertexSpring.tolerance = 0;
         targetSpring.tolerance = 0;
 
-        //TEST: Will changing the damper prevent jitter?
-        vertexSpring.damper = 100;
-        targetSpring.damper = 100;
-
         //TEST: Will reducing the mass create a better effect?
         targetSpring.GetComponent<Rigidbody>().mass = pointMass;
     }

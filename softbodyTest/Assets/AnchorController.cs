@@ -30,12 +30,17 @@ public class AnchorController : MonoBehaviour
         GameObject sheet = spawner.SpawnSoftbody(SpawnerController.SoftbodyType.SHEET, dimensions, 4);
         for (int i = 0; i < sheet.transform.childCount; i++)
         {
+            GameObject child = sheet.transform.GetChild(i).gameObject;
+
+            SpringJoint[] springJoints = child.GetComponents<SpringJoint>();
+
+            for (int j = 0; j < springJoints.Length; j++) {
+                //TEST: Will changing the damper prevent jitter?
+                springJoints[j].damper = 100;
+            }
+
             if (i % (Mathf.Pow(2, 4) + 1) == 0)
             {
-                GameObject child = sheet.transform.GetChild(i).gameObject;
-
-                child.name = "kinematic";
-
                 child.GetComponent<Rigidbody>().isKinematic = true;
             }
         }
