@@ -8,8 +8,6 @@ public class SoftbodyController : MonoBehaviour
     InputAction impulse;
     float value = 1;
 
-    //TODO: Update ropes and sheets for OVD rather than OV
-    public List<GameObject> outerVertices = new List<GameObject>();
     public List<VertexData> outerVertexData = new List<VertexData>();
 
     Dictionary<int, int> mergedVertices = new Dictionary<int, int>();
@@ -85,6 +83,15 @@ public class SoftbodyController : MonoBehaviour
         {
             GameObject child = transform.GetChild(i).gameObject;
             child.GetComponent<Rigidbody>().AddForce(impulse * customValue, ForceMode.Impulse);
+        }
+    }
+
+    public void ImpulseSoftbody(Vector3 impulse)
+    {
+        for (int i = 0; i < transform.childCount; i++)
+        {
+            GameObject child = transform.GetChild(i).gameObject;
+            child.GetComponent<Rigidbody>().AddForce(impulse, ForceMode.Impulse);
         }
     }
 

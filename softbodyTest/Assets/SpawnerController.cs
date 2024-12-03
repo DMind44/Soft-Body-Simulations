@@ -10,9 +10,12 @@ public class SpawnerController : MonoBehaviour
     [SerializeField]
     GameObject softbodyVertexPrefab;
 
+    [SerializeField]
+    float thinningFactor = 0.2f;
+
     float pointMass = 0.1f;
 
-    enum SoftbodyType
+    public enum SoftbodyType
     {
         ROPE, //1 element, length
         SHEET, //2 elements, width x height
@@ -24,20 +27,21 @@ public class SpawnerController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        StartCoroutine(DelayedSpawn());
+        //StartCoroutine(DelayedSpawn());
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        //TODO: Find a way for mesh to properly generate when camera and spawner rotated
+        transform.rotation = Quaternion.identity;
     }
 
     //Spawn Logic:
     //Resolution = max number of divisions for longest dimension
     //Resolution = 2^resolution - BE CAREFUL
     //TODO: Add error checking for misaligned dimensions
-    GameObject SpawnSoftbody(SoftbodyType softbodyType, float[] dimensions, int resolution)
+    public GameObject SpawnSoftbody(SoftbodyType softbodyType, float[] dimensions, int resolution)
     {
         //Create softbody base
         GameObject softbodyBase = Instantiate(softbodyBasePrefab, transform.position, transform.rotation);
@@ -60,14 +64,23 @@ public class SpawnerController : MonoBehaviour
 
                     //Now glue the rope together using spring joints
                     //Skip the first point - no gluing will be done
-                    for (int i = 1; i < vertices.Count; i++)
+                    for (int i = 0; i < vertices.Count; i++)
                     {
                         GameObject vertex = (GameObject)vertices[i];
-                        GameObject previousVertex = (GameObject)vertices[i - 1];
+
+                        vertex.transform.localScale = new Vector3(vertex.transform.localScale.x, vertex.transform.localScale.y * thinningFactor, vertex.transform.localScale.z * thinningFactor);
 
                         //All vertices for ropes are "outer"
-                        softbodyController.outerVertices.Add(vertex);
+                        List<bool> directionList = new List<bool>() { true, true, i == 0, true, true, i == vertices.Count - 1 };
+                        softbodyController.outerVertexData.Add(new VertexData(vertex, directionList));
                         //Triangles for ropes are weird and need tuning
+
+                        if (i == 0)
+                        {
+                            continue;
+                        }
+
+                        GameObject previousVertex = (GameObject)vertices[i - 1];
 
                         //NOTE: Should be safe - but we should be careful as this will lead to multiple spring joings per vertex
                         //Must be careful when using GetComponent on SpringJoints
@@ -112,9 +125,12 @@ public class SpawnerController : MonoBehaviour
                                 //ONLY FULLY SKIP THE VERY FIRST ONE - SELECTIVELY SKIP THE OTHERS
                                 GameObject vertex = (GameObject)((ArrayList)vertices[i])[j];
                                 //All vertices for sheets are "outer"
-                                softbodyController.outerVertices.Add(vertex);
+                                List<bool> directionList = new List<bool>() { true, i == 0, j == 0, true, i == vertices.Count - 1, j == ((ArrayList)vertices[i]).Count - 1 };
+                                softbodyController.outerVertexData.Add(new VertexData(vertex, directionList));
                                 //TEST: Will reducing the mass create a better effect?
                                 vertex.GetComponent<Rigidbody>().mass = pointMass;
+
+                                vertex.transform.localScale = new Vector3(vertex.transform.localScale.x, vertex.transform.localScale.y * thinningFactor, vertex.transform.localScale.z);
 
                                 //Glue to previous vertex
                                 if (j > 0)
@@ -209,13 +225,13 @@ public class SpawnerController : MonoBehaviour
                                     List<bool> directionList = new List<bool>() { i == 0, j == 0, k == 0, i == vertices.Count - 1, j == plane.Count - 1, k == rope.Count - 1 };
                                     //If it's the first vertex on any axis, it's an outer
                                     //We also shouldn't have dupes, but better to check
-                                    if ((i == 0 || j == 0 || k == 0) && !softbodyBase.GetComponent<SoftbodyController>().outerVertices.Contains(vertex))
+                                    if ((i == 0 || j == 0 || k == 0) && !softbodyBase.GetComponent<SoftbodyController>().outerVertexData.Contains(new VertexData(vertex, directionList)))
                                     {
                                         softbodyController.outerVertexData.Add(new VertexData(vertex, directionList));
                                     }
                                     //If it's the last vertex on any axis, it's an outer
                                     //We also shouldn't have dupes, but better to check
-                                    else if ((i == vertices.Count - 1 || j == plane.Count - 1 || k == rope.Count - 1) && !softbodyBase.GetComponent<SoftbodyController>().outerVertices.Contains(vertex))
+                                    else if ((i == vertices.Count - 1 || j == plane.Count - 1 || k == rope.Count - 1) && !softbodyBase.GetComponent<SoftbodyController>().outerVertexData.Contains(new VertexData(vertex, directionList)))
                                     {
                                         softbodyController.outerVertexData.Add(new VertexData(vertex,directionList));
                                     }
@@ -292,7 +308,7 @@ public class SpawnerController : MonoBehaviour
         }
 
         softbodyController.ConstructMesh();
-
+        
         return softbodyBase;
     }
 
@@ -300,10 +316,10 @@ public class SpawnerController : MonoBehaviour
     {
         float[] dimensions = { 4, 4, 4 };
         yield return new WaitForSeconds(1);
-        //GameObject rope0 = SpawnSoftbody(SoftbodyType.ROPE, dimensions, 3);
-
-        //GameObject sheet0 = SpawnSoftbody(SoftbodyType.SHEET, dimensions, 3);
-
+        GameObject rope0 = SpawnSoftbody(SoftbodyType.ROPE, dimensions, 3);
+        yield return new WaitForSeconds(2);
+        GameObject sheet0 = SpawnSoftbody(SoftbodyType.SHEET, dimensions, 3);
+        yield return new WaitForSeconds(2);
         GameObject cube0 = SpawnSoftbody(SoftbodyType.CUBE, dimensions, 3);
         yield return new WaitForSeconds(2);
         GameObject cube1 = SpawnSoftbody(SoftbodyType.CUBE, dimensions, 3);
