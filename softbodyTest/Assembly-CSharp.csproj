@@ -60,9 +60,11 @@
     <Analyzer Include="/Applications/Unity/Hub/Editor/2019.4.1f1/2022.3.52f1-arm64/Unity.app/Contents/Tools/Unity.SourceGenerators/Unity.Properties.SourceGenerator.dll" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets/AnchorController.cs" />
     <Compile Include="Assets/CameraController.cs" />
     <Compile Include="Assets/SoftbodyController.cs" />
     <Compile Include="Assets/LauncherController.cs" />
+    <Compile Include="Assets/WindController.cs" />
     <Compile Include="Assets/SpawnerController.cs" />
   </ItemGroup>
   <ItemGroup>
