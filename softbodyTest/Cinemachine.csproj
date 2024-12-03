@@ -72,8 +72,8 @@
     <Compile Include="Library/PackageCache/com.unity.cinemachine@2.10.3/Runtime/Timeline/CinemachineShotPlayable.cs" />
     <Compile Include="Library/PackageCache/com.unity.cinemachine@2.10.3/Runtime/PostProcessing/CinemachineVolumeSettings.cs" />
     <Compile Include="Library/PackageCache/com.unity.cinemachine@2.10.3/Runtime/Behaviours/CinemachineExternalCamera.cs" />
-    <Compile Include="Library/PackageCache/com.unity.cinemachine@2.10.3/Runtime/Core/GaussianFilter.cs" />
     <Compile Include="Library/PackageCache/com.unity.cinemachine@2.10.3/Runtime/ThirdParty/clipper.cs" />
+    <Compile Include="Library/PackageCache/com.unity.cinemachine@2.10.3/Runtime/Core/GaussianFilter.cs" />
     <Compile Include="Library/PackageCache/com.unity.cinemachine@2.10.3/Runtime/Components/CinemachineHardLockToTarget.cs" />
     <Compile Include="Library/PackageCache/com.unity.cinemachine@2.10.3/Runtime/Behaviours/CinemachineCollider.cs" />
     <Compile Include="Library/PackageCache/com.unity.cinemachine@2.10.3/Runtime/Core/CinemachineCore.cs" />

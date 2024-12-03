@@ -1,12 +1,11 @@
 ﻿<Properties StartupConfiguration="{881B9852-03F5-BC7F-67DB-DC65C354CE46}|">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/WindController.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/SoftbodyController.cs">
     <Files>
-      <File FileName="Assets/SpawnerController.cs" Line="16" Column="25" />
-      <File FileName="Assets/SoftbodyController.cs" Line="59" Column="13" />
-      <File FileName="Assets/CameraController.cs" Line="10" Column="21" />
-      <File FileName="Assets/LauncherController.cs" Line="15" Column="1" />
-      <File FileName="Assets/AnchorController.cs" Line="30" Column="86" />
-      <File FileName="Assets/WindController.cs" Line="17" Column="6" />
+      <File FileName="Assets/SpawnerController.cs" Line="439" Column="1" />
+      <File FileName="Assets/SoftbodyController.cs" Line="81" Column="75" />
+      <File FileName="Assets/LauncherController.cs" Line="54" Column="22" />
+      <File FileName="Assets/AnchorController.cs" Line="36" Column="1" />
+      <File FileName="Assets/WindController.cs" Line="18" Column="1" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">

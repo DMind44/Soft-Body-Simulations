@@ -52,6 +52,24 @@ public class LauncherController : MonoBehaviour
                         gameObjects.Add(cube);
                         break;
                     }
+                case 3:
+                    {
+                        float[] dimensions = { 5, 5, 1 };
+                        GameObject cube = spawner.SpawnSoftbody(SpawnerController.SoftbodyType.SHEET, dimensions, 4);
+                        gameObjects.Add(cube);
+                        break;
+                    }
+                case 4:
+                    {
+                        float[] dimensions = { 12, 1, 1 };
+                        GameObject cube = spawner.SpawnSoftbody(SpawnerController.SoftbodyType.ROPE, dimensions, 5);
+                        gameObjects.Add(cube);
+                        for (int i = 0; i < 5; i++)
+                        {
+                            cube.transform.GetChild(Random.Range(0, cube.transform.childCount - 1)).GetComponent<Rigidbody>().AddForce(Random.insideUnitSphere * 10, ForceMode.Impulse);
+                        }
+                        break;
+                    }
             }
             yield return new WaitForSeconds(7.5f);
             while (gameObjects.Count > 0)
