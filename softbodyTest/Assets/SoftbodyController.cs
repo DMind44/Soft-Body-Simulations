@@ -56,8 +56,11 @@ public class SoftbodyController : MonoBehaviour
         for (int i = 0; i < transform.childCount; i++)
         {
             GameObject child = transform.GetChild(i).gameObject;
-            child.GetComponent<MeshRenderer>().forceRenderingOff = true;
+            //TODO: TEMP (swap for mesh)
+            child.GetComponent<MeshRenderer>().forceRenderingOff = false;
         }
+        //TODO: TEMP (swap for vert)
+        GetComponent<MeshRenderer>().forceRenderingOff = true;
 
         //NOTE: Null checking to ensure no errors on frame 1
         if (GetComponent<MeshFilter>().mesh != null)

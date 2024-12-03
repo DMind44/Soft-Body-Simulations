@@ -37,6 +37,8 @@ public class AnchorController : MonoBehaviour
             for (int j = 0; j < springJoints.Length; j++) {
                 //TEST: Will changing the damper prevent jitter?
                 springJoints[j].damper = 100;
+                //TEST: Will changing the damper prevent jitter?
+                springJoints[j].spring = 500;
             }
 
             if (i % (Mathf.Pow(2, 4) + 1) == 0)
